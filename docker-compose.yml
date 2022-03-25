@@ -1,0 +1,27 @@
+version: "3"
+services:
+  app:
+    container_name: "app"
+    volumes:
+      - ./docker/go/app:/app
+    tty: true
+    working_dir: /app
+    build:
+      context: .
+      dockerfile: docker/go/Dockerfile
+    ports:
+      - 3000:3000
+  db:
+    image: mysql:8.0.26
+    command: mysqld --character-set-server=utf8mb4 --collation-server=utf8mb4_unicode_ci
+    container_name: sample-mysql
+    volumes:
+      - ./docker/mysql/data:/var/lib/mysql
+    ports:
+      - 13330:3306
+    environment:
+      MYSQL_ROOT_PASSWORD: root
+      MYSQL_DATABASE: sample
+      MYSQL_USER: docker
+      MYSQL_PASSWORD: docker
+      TZ: Asia/Tokyo
