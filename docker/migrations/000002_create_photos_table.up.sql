@@ -6,7 +6,7 @@ CREATE TABLE `photos`
     `image_path` text NOT NULL COMMENT '画像パス',
     `created_at` datetime NOT NULL DEFAULT CURRENT_TIMESTAMP COMMENT '作成日時',
     `updated_at` datetime NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP COMMENT '更新日時',
-    PRIMARY KEY(`id`),
+    PRIMARY KEY(`id`)
 ) ENGINE = InnoDB
   DEFAULT CHARSET = `utf8mb4`
   DEFAULT COLLATE = `utf8mb4_bin` COMMENT '写真テーブル';
