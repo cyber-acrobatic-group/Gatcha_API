@@ -17,6 +17,7 @@ services:
     container_name: gatcha-mysql
     volumes:
       - ./docker/mysql/data:/var/lib/mysql
+      - ./docker/mysql/cnf/my.cnf:/etc/mysql/conf.d/my.cnf
       - ./docker/migrations:/docker-entrypoint-initdb.d
     ports:
       - 13330:3306
