@@ -7,7 +7,7 @@ type UserCreateForm struct {
 	Password string `json:"password" binding:"required,max=100"`
 }
 
-func (u UserCreateForm) ConvertToUser() model.User {
+func (u UserCreateForm) ToUser() model.User {
 	return model.User{
 		Name:     u.Name,
 		Password: u.Password,

@@ -7,6 +7,7 @@ import (
 
 type User interface {
 	Create(user model.User) error
+	Show(id uint64) (model.User, error)
 }
 
 func Create(user model.User) error {
@@ -19,4 +20,16 @@ func Create(user model.User) error {
 	}
 	defer db.Close()
 	return nil
+}
+
+func Show(id uint64) (model.User, error) {
+	db, err := mysql.GormConnect()
+	if err != nil {
+		return model.User{}, err
+	}
+	var targetUser model.User
+	if err := db.First(&targetUser, id).Error; err != nil {
+		return model.User{}, err
+	}
+	return targetUser, nil
 }
