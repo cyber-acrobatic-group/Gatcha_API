@@ -1,16 +1,30 @@
 package router
 
 import (
-	"fmt"
-
+	"github.com/cyber-acrobatic-group/Gatcha_API/service"
 	"github.com/gin-gonic/gin"
 )
 
 func Setting() {
-	fmt.Println("router")
-	router := gin.Default()
-	router.POST("/photo", func(context *gin.Context) {
-		fmt.Println("hogehoge")
+	r := gin.Default()
+
+	r.GET("/ping", func(c *gin.Context) {
+		c.JSON(200, gin.H{
+			"message": "pong",
+		})
 	})
-	router.Run(":3000")
+
+	r.POST("/user", func(c *gin.Context) {
+		service.RespUser(c)
+	})
+
+	r.GET("/user", func(c *gin.Context) {
+		id := c.Query("id")
+		res := service.GetUserbyId(id)
+		c.JSON(200, gin.H{
+			"result": res,
+		})
+	})
+
+	r.Run(":3000")
 }

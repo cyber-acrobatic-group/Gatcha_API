@@ -1,37 +1,56 @@
 package main
 
 import (
+	"database/sql"
 	"fmt"
 
-	"github.com/cyber-acrobatic-group/Gatcha_API/service"
-	"github.com/gin-gonic/gin"
+	_ "github.com/go-sql-driver/mysql"
 )
 
 func main() {
-	fmt.Println("Hello, World!!")
 
-	//router.Setting()
+	dbconf := "root:root@tcp(172.27.0.3:3306)/gatcha?charset=utf8mb4"
 
-	r := gin.Default()
-	r.GET("/ping", func(c *gin.Context) {
-		c.JSON(200, gin.H{
-			"message": "pong",
-		})
-	})
+	db, err := sql.Open("mysql", dbconf)
 
-	r.POST("/user", func(c *gin.Context) {
-		service.RespUser(c)
-	})
+	// 接続が終了したらクローズする
+	defer db.Close()
 
-	r.GET("/user", func(c *gin.Context) {
-		id := c.Query("id")
-		res := service.GetUserbyId(id)
-		c.JSON(200, gin.H{
-			"result": res,
-		})
-	})
+	if err != nil {
+		fmt.Println(err.Error())
+	}
 
-	r.Run(":3000")
+	err = db.Ping()
+
+	if err != nil {
+		fmt.Println("データベース接続失敗")
+	} else {
+		fmt.Println("データベース接続成功")
+	}
+	// fmt.Println("Hello, World!!")
+
+	// //router.Setting()
+
+	// r := gin.Default()
+	// r.GET("/ping", func(c *gin.Context) {
+	// 	c.JSON(200, gin.H{
+	// 		"message": "pong",
+	// 	})
+	// })
+
+	// r.POST("/user", func(c *gin.Context) {
+	// 	service.RespUser(c)
+	// })
+
+	// r.GET("/user", func(c *gin.Context) {
+	// 	id := c.Query("id")
+	// 	res := service.GetUserbyId(id)
+	// 	c.JSON(200, gin.H{
+	// 		"result": res,
+	// 	})
+	// })
+
+	// r.Run(":3000")
 }
 
 // func main() {
